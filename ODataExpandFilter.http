@@ -1,0 +1,15 @@
+@BaseUrl = https://localhost:7027
+
+### Works as expected, all products and all expands
+GET {{BaseUrl}}/products?$expand=ProductType,ProductCategories
+Accept: application/json
+
+### Works as expected, all products, but only categories with id 1
+GET {{BaseUrl}}/products?$expand=ProductCategories($filter=Id eq 1)
+Accept: application/json
+
+### Works not as expected. 
+# Expected: All products, but only product types with id 1
+# Actual: All products with all product types (filter is ignored)
+GET {{BaseUrl}}/products?$expand=ProductType($filter=Id eq 1)
+Accept: application/json
